@@ -13,13 +13,15 @@ using namespace std;
 enum Order {POST_ORDER, IN_ORDER, PRE_ORDER};
             //  0           1          2
 
+class EmptyTreeError {};
 template<class T>
 class TreeT {
 public:
     TreeT();
     ~TreeT();
+    TreeT(const TreeT& otherTree);
 
-    TreeT& operator=(const TreeT& otherTree);
+    TreeT<T>& operator=(const TreeT& otherTree);
 
     void Add(T value);       // Add value to the tree
     void Remove(T value);    // Remove value from the tree
@@ -49,14 +51,16 @@ private:
     void DeleteNode(Node*& subtree);
     void GetPredecessor(Node* curr, T& value);
 
+    void copyOther(const TreeT<T>& otherTree);
     void CopyHelper(Node*& thisTree, Node* otherTree);
 
     // Used for iterator
-    queue<T> iterArr;     // queue used for the iterator
+    queue<T> iterQue;     // queue used for the iterator
     void PlacePreOrder(Node* node);
     void PlacePostOrder(Node* node);
     void PlaceInOrder(Node* node);
 };
+
 
 
 #include "TreeT.cpp"
